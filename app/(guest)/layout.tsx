@@ -28,9 +28,7 @@ export default function RootLayout({
                 )}
             >
                 <Navbar/>
-                <main className="min-h-[calc(100vh-3rem)]">
-                    {children}
-                </main>
+                  {children}
                 <Footer/>
             </body>
         </html>

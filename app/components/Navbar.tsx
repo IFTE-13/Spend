@@ -1,12 +1,13 @@
 import { Button } from '@/components/ui/button'
+import { checkUser } from '@/utils/checkUser'
 import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 import { HandCoins, LayoutDashboard, PenBox } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
 
-export const Navbar = () => {
+export const Navbar = async () => {
+  await checkUser();
   return (
-    <div className='fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b'>
+    <div className='sticky top-0 h-18 w-full bg-white/80 backdrop-blur-md z-50 border-b'>
       <nav className='container mx-auto px-4 py-4 flex items-center justify-between'>
         <Link href={"/"}>
           <HandCoins size={30}/>
