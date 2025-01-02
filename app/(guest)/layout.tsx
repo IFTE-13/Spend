@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import { Footer } from "@/app/components/Footer";
 import { cn } from "@/lib/utils";
-import { Navbar } from "../components/Navbar";
+import { ClerkProvider } from '@clerk/nextjs'
+import { Navbar } from "@/app/components/Navbar";
+import { Footer } from "@/app/components/Footer";
 
 const inter = Inter({ subsets: ["latin"]});
 
@@ -18,19 +19,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={cn(
-            'antialiased',
-            inter.className
-          )}
-      >
-        <Navbar />
-        <main className="min-h-[calc(100vh-3rem)]">
-            {children}
-        </main>
-        <Footer/>
-      </body>
-    </html>
+    <ClerkProvider>
+        <html lang="en">
+            <body
+                className={cn(
+                    'antialiased',
+                    inter.className
+                )}
+            >
+                <Navbar/>
+                <main className="min-h-[calc(100vh-3rem)]">
+                    {children}
+                </main>
+                <Footer/>
+            </body>
+        </html>
+    </ClerkProvider>
   );
 }
