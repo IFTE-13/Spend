@@ -1,5 +1,4 @@
 import React from 'react'
-import { Navbar } from '../components/Navbar';
 
 const AppLayout = ({
     children,
@@ -7,12 +6,9 @@ const AppLayout = ({
     children: React.ReactNode;
   }>) => {
   return (
-    <>
-        <Navbar />
-        <div className='mx-auto container my-8'>
-          {children}
-        </div>
-    </>
+      <div className='mx-auto container my-8'>
+        {children}
+      </div>
   )
 }
 
