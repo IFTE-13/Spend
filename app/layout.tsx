@@ -28,10 +28,8 @@ export default function RootLayout({
                     inter.className
                 )}
             >
-                <Navbar/>
-                  {children}
-                  <Toaster richColors/>
-                <Footer/>
+              {children}
+              <Toaster richColors/>
             </body>
         </html>
     </ClerkProvider>
