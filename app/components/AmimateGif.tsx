@@ -1,13 +1,18 @@
-import Image from 'next/image'
-import React from 'react'
+import Image, { StaticImageData } from 'next/image';
+import React from 'react';
 
-const AmimateGif = ({src, alt} : any) => {
+type AmimateGifProps = {
+  src: string | StaticImageData;
+  alt: string;
+};
+
+const AmimateGif = ({ src, alt }: AmimateGifProps) => {
   return (
     <Image
-        src={src}
-        alt={alt}
+      src={src}
+      alt={alt}
     />
-  )
-}
+  );
+};
 
-export default AmimateGif
+export default AmimateGif;
