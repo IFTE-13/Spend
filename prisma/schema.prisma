@@ -7,95 +7,46 @@ datasource db {
   url  	    = env("DATABASE_URL")
 }
 
-model User {
-  id                 String @id @default(uuid())
-  clerkUserId        String @unique
-  email              String @unique
-  name               String
-  imageUrl           String
-  transactions       Transaction[]
-  accounts           Account[]
-  budgets            Budget[]
+model Category {
   createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-
-  @@map("users")
-}
-
-enum AccountType {
-  CURRENT
-  SAVINGS
-}
-
-model Account {
-  id                 String @id @default(uuid())
   name               String
-  type               AccountType
-  balance            Decimal @default(0)
-  
-  isDefault          Boolean @default(false)
   userId             String
-  user               User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  transactions       Transaction[]
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-
-  @@index([userId])
-  @@map("accounts")
-}
-
-enum TransactionType {
-  INCOME
-  EXPENSE
-}
-
-enum RecurringInterval {
-  DAILY
-  WEEKLY
-  MONTHLY
-  YEARLY
-}
-
-enum TransactionStatus {
-  PENDING
-  COMPLETED
-  FAILED
+  icon               String
+  type               String @default("income")
+  
+  @@unique([name, userId, type])
 }
 
 model Transaction {
   id                 String @id @default(uuid())
-  type               TransactionType
-  amount             Decimal
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  amount             Float
   description        String?
   date               DateTime
-  category           String
-  receiptUrl         String?
-  isRecurring        Boolean @default(false)
-  recurringInterval  RecurringInterval?
-  nextRecurringDate  DateTime?
-  lastProcessed      DateTime?
-  status             TransactionStatus @default(COMPLETED)
   userId             String
-  user               User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  accountId          String
-  account            Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
-
-  @@index([userId])
-  @@index([accountId])
-  @@map("transactions")
+  type               String @default("income")
+  category           String
+  categoryIcon       String
 }
 
-model Budget {
-  id                 String @id @default(uuid())
-  amount             Decimal
-  lastAlertSent      DateTime?
-  userId             String @unique
-  user               User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+model MonthHistory {
+  userId             String
+  day                Int
+  month              Int
+  year               Int
+  income             Float
+  expense            Float
 
-  @@index([userId])
-  @@map("budgets")
+  @@id([day, month, year, userId])
+}
+
+model YearHistory {
+  userId             String
+  month              Int
+  year               Int
+  income             Float
+  expense            Float
+
+  @@id([month, year, userId])
 }
