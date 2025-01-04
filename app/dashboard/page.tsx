@@ -4,6 +4,8 @@ import { currentUser } from '@clerk/nextjs/server';
 import { ArrowBigDownDash, ArrowBigUpDash } from 'lucide-react';
 import React from 'react'
 import CreateTransactionsDialog from './_components/CreateTransactionsDialog';
+import OverView from './_components/OverView';
+import History from './_components/History';
 
 async function page() {
   requireUser();
@@ -39,6 +41,8 @@ async function page() {
           </div>
         </div>
       </div>
+      <OverView />
+      <History />
     </div>
   )
 }
