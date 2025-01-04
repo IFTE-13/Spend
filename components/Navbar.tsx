@@ -11,7 +11,7 @@ const navigationItems = [
     icon: LayoutDashboard
   },
   {
-    href: '/transaction',
+    href: '/transactions',
     label: 'Transaction',
     icon: PenBox
   },
