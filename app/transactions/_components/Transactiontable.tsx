@@ -14,6 +14,14 @@ import {
     SortingState,
     useReactTable,
   } from "@tanstack/react-table";
+  import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
 import {
     Table,
     TableBody,
@@ -31,6 +39,9 @@ import { DataTableFacetedFilter } from "@/components/datatable/data-table-facete
 import { DataTableViewOptions } from "@/components/datatable/ColumnToggle";
 import { Button } from "@/components/ui/button";
 import { download, generateCsv, mkConfig } from "export-to-csv"
+import { DownloadIcon, MoreHorizontal } from "lucide-react";
+import { TrashIcon } from "@radix-ui/react-icons";
+import DeleteTranactionDialog from "./DeleteTranactionDialog";
 
 interface Props {
     from: Date;
@@ -108,7 +119,19 @@ export const columns: ColumnDef<TransactionHistoryRow>[] = [
             {row.original.amount}
         </p>
     },
+    {
+        accessorKey: "actions",
+        enableHiding: false,
+        cell: ({row}) => 
+            <RowActions transaction={row.original} />
+    },
 ];
+
+const csvConfig = mkConfig({
+    fieldSeparator: ".",
+    decimalSeparator: ".",
+    useKeysAsHeaders: true
+})
 
 export default function Transactiontable({from, to}: Props) {
   const [ sorting, setSorting ] = useState<SortingState>([]);
@@ -119,6 +142,11 @@ export default function Transactiontable({from, to}: Props) {
         `/api/transaction-history?from=${DateToUTCDate(from)}&to=${DateToUTCDate(to)}`
     ).then((res) => res.json())
   })
+
+  const handleExportCSV = (data: any[]) => {
+    const csv = generateCsv(csvConfig)(data);
+    download(csvConfig)(csv);
+  }
 
   console.log(history)
 
@@ -173,6 +201,25 @@ export default function Transactiontable({from, to}: Props) {
                 )}
             </div>
             <div className="flex flex-wrap gap-2">
+                <Button
+                variant={"outline"}
+                size={"sm"}
+                className="ml-auto h-8 lg:flex"
+                onClick={() => {
+                    const data = table.getFilteredRowModel().rows.map(row => ({
+                        category: row.original.category,
+                        categoryIcon: row.original.categoryIcon,
+                        description: row.original.description,
+                        type: row.original.type,
+                        amount: row.original.amount,
+                        date: row.original.date,
+                    }))
+                    handleExportCSV(data);
+                }}
+                >
+                    <DownloadIcon className="mr-2 h-4 w-4" />
+                    Export CSV
+                </Button>
                 <DataTableViewOptions table={table} />
             </div>
         </div>
@@ -242,4 +289,35 @@ export default function Transactiontable({from, to}: Props) {
             </SkeletonWrapper>
     </div>
   )
+}
+
+function RowActions({transaction} : {transaction : TransactionHistoryRow}) {
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+
+    return (
+        <>
+            <DeleteTranactionDialog open={showDeleteDialog} setOpen={setShowDeleteDialog} transactionId={transaction.id} />
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button
+                    variant={"ghost"}
+                    className="h-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4"/>
+                    </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>Action</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem 
+                    className="flex items-center gap-2"
+                    onSelect={() => {setShowDeleteDialog(prev => !prev)}}
+                    >
+                        <TrashIcon className="h-4 w-4 text-muted-foreground" />
+                        Delete
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+        </>
+    )
 }
