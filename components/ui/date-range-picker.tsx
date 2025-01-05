@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 'use client'
 
 import React, { type FC, useState, useEffect, useRef, JSX } from 'react'
@@ -220,7 +219,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     }
   }
 
-  const checkPreset = (): void => {
+  const checkPreset = React.useCallback((): void => {
     for (const preset of PRESETS) {
       const presetRange = getPresetRange(preset.name)
 
@@ -246,7 +245,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
     }
 
     setSelectedPreset(undefined)
-  }
+  }, [range]);
 
   const resetValues = (): void => {
     setRange({
@@ -283,7 +282,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
 
   useEffect(() => {
     checkPreset()
-  }, [range])
+  }, [checkPreset])
 
   const PresetButton = ({
     preset,
@@ -324,6 +323,8 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
       openedRangeRef.current = range
       openedRangeCompareRef.current = rangeCompare
     }
+    // We only want to store initial values when the popover opens
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen])
 
   return (
