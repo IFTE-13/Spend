@@ -1,6 +1,6 @@
 "use client"
 
-import { DeleteCategory } from "@/app/dashboard/_actions/categories";
+import { DeleteCategory } from "@/app/(app)/dashboard/_actions/categories";
 import { 
     AlertDialog,
     AlertDialogAction,
