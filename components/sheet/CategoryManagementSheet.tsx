@@ -114,7 +114,7 @@ function CategoryList({ type }: { type: TransactionType }) {
               categories yet
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Click "Add New" to create your first category
+              Click &quot;Add New&quot; to create your first category
             </p>
           </div>
         ) : (

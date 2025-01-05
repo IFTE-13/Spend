@@ -6,7 +6,6 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { Toaster } from "sonner";
 import React from "react";
 import { Providers } from "./providers";
-import { Navbar } from './../components/Navbar';
 
 const inter = Inter({ subsets: ["latin"]});
 

@@ -128,7 +128,7 @@ export default function CreateTransactionsDialog({trigger, type}: Props) {
                         <FormField 
                             control={form.control}
                             name="category"
-                            render={({field}) => (
+                            render={({}) => (
                                 <FormItem className="flex flex-col">
                                     <div className="flex flex-col space-y-4">
                                         <FormLabel>Category</FormLabel>

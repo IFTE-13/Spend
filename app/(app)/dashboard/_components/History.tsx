@@ -13,6 +13,7 @@ import {
     CartesianGrid,
     ResponsiveContainer,
     Tooltip,
+    TooltipProps,
     XAxis,
     YAxis
 } from "recharts"
@@ -110,9 +111,7 @@ export default function History() {
                                 />
                                 <Tooltip 
                                 cursor={{ opacity: 0.1 }}
-                                content={props => (
-                                    <CustomTooltip {...props}/>
-                                )}
+                                content={(props: TooltipProps<number, string>) => <CustomTooltip {...props} />}
                                 />
                             </BarChart>
                         </ResponsiveContainer>
@@ -132,10 +131,13 @@ export default function History() {
   )
 }
 
-function CustomTooltip({ active, payload }: any) {
+function CustomTooltip({ active, payload }: TooltipProps<number, string>) {
     if (!active || !payload || payload.length === 0) return null;
 
-    const data = payload[0].payload;
+    const data = payload[0].payload as {
+        expense: number;
+        income: number;
+    };
     const { expense, income } = data;
 
     return (

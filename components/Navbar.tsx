@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { checkUser } from '@/utils/checkUser'
 import { SignedIn, UserButton } from '@clerk/nextjs'
-import { LayoutDashboard, PenBox, ChartNoAxesGantt } from 'lucide-react'
+import { LayoutDashboard, PenBox } from 'lucide-react'
 import Link from 'next/link'
 
 const navigationItems = [

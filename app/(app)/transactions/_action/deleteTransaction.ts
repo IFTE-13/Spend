@@ -1,6 +1,5 @@
 "use server"
 
-import { CreateTransactionSchema, CreateTransactionSchemaType } from "@/schema/transaction";
 import prisma from "@/utils/db";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";

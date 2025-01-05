@@ -46,9 +46,15 @@ interface Props {
     from: Date;
     to: Date;
 }
-const emptyData: any[] = [];
-
 type TransactionHistoryRow = GetTransactionHistoryResponseType[0]
+
+// Define the empty data array with the correct type
+const emptyData: TransactionHistoryRow[] = [];
+
+// Define type for CSV export data
+type CSVRow = {
+    [key: string]: string | number;
+}
 
 export const columns: ColumnDef<TransactionHistoryRow>[] = [
     {
@@ -142,7 +148,7 @@ export default function Transactiontable({from, to}: Props) {
     ).then((res) => res.json())
   })
 
-  const handleExportCSV = (data: any[]) => {
+  const handleExportCSV = (data: CSVRow[]) => {
     const csv = generateCsv(csvConfig)(data);
     download(csvConfig)(csv);
   }
@@ -163,7 +169,7 @@ export default function Transactiontable({from, to}: Props) {
   })
 
   const categoriesOptions = useMemo(() => {
-    const categoresMap = new Map();
+    const categoresMap = new Map<string, { value: string; label: string }>();
     history.data?.forEach(transaction => {
         categoresMap.set(transaction.category, {
             value: transaction.category,
@@ -206,25 +212,36 @@ export default function Transactiontable({from, to}: Props) {
                 )}
             </div>
             <div className="flex flex-wrap gap-2">
-                <Button
+            <Button
                 variant={"outline"}
                 size={"sm"}
                 className="ml-auto h-8 lg:flex"
                 onClick={() => {
-                    const data = table.getFilteredRowModel().rows.map(row => ({
-                        category: row.original.category,
-                        categoryIcon: row.original.categoryIcon,
-                        description: row.original.description,
-                        type: row.original.type,
-                        amount: row.original.amount,
-                        date: row.original.date,
-                    }))
+                    const data: CSVRow[] = table.getFilteredRowModel().rows.map(row => {
+                        // Convert Date to string and handle null description
+                        const date = new Date(row.original.date);
+                        const formattedDate = date.toLocaleDateString("default", {
+                            timeZone: "UTC",
+                            year: "numeric",
+                            month: "2-digit",
+                            day: "2-digit"
+                        });
+                        
+                        return {
+                            category: row.original.category,
+                            categoryIcon: row.original.categoryIcon,
+                            description: row.original.description ?? '', // Convert null to empty string
+                            type: row.original.type,
+                            amount: row.original.amount,
+                            date: formattedDate,
+                        }
+                    })
                     handleExportCSV(data);
                 }}
-                >
-                    <DownloadIcon className="mr-2 h-4 w-4" />
-                    Export CSV
-                </Button>
+            >
+                <DownloadIcon className="mr-2 h-4 w-4" />
+                Export CSV
+            </Button>
                 <DataTableViewOptions table={table} />
             </div>
         </div>
