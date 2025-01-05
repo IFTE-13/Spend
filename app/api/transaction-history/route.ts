@@ -42,7 +42,7 @@ async function getTransactionHistory(userId: string, from: Date, to: Date) {
             }
         },
         orderBy: {
-            date: "asc"
+            date: "desc"
         }
     })
 

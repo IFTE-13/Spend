@@ -26,7 +26,6 @@ export default function StatsCard({from, to}: Props) {
   
   const balance = income - expense;
   
-  console.log(DateToUTCDate(from))
   return (
     <div className="relative flex w-full flex-wrap gap-2 md:flex-nowrap">
         <SkeletonWrapper isLoading={statsQuery.isFetching}>

@@ -44,7 +44,7 @@ export async function GET(request: Request) {
     return Response.json(data)
 }
 
-export type HetHistoryDataResponseType = Awaited<ReturnType<typeof getHistoryData>>
+export type GetHistoryDataResponseType = Awaited<ReturnType<typeof getHistoryData>>
 
 async function getHistoryData(userId: string, timeframe: Timeframe, period: Period) {
     switch (timeframe){
@@ -107,7 +107,7 @@ async function getYearHistoryData(userId: string, year: number){
 }
 
 
-async function getMonthHistoryData(userId: string, year: number, month: number) {
+async function getMonthHistoryData(userId: string, month: number, year: number) {
     const result = await prisma.monthHistory.groupBy({
         by:["day"],
         where: {

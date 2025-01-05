@@ -13,7 +13,6 @@ export default function OverView({}) {
     from: startOfMonth(new Date()),
     to: new Date()
   })
-  console.log(dateRange)
   return (
     <>
         <div className="container mx-auto flex flex-wrap items-end justify-between gap-2 py-6">

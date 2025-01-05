@@ -15,11 +15,6 @@ const navigationItems = [
     label: 'Transaction',
     icon: PenBox
   },
-  {
-    href: '/manage',
-    label: 'Manage',
-    icon: ChartNoAxesGantt
-  },
 ]
 
 export const Navbar = async () => {

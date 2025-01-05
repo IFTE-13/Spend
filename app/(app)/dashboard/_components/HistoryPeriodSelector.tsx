@@ -20,7 +20,6 @@ export default function HistoryPeriodSelector({period, setPeriod, timeframe, set
     queryKey: ["overview", "history", "periods"],
     queryFn: () => fetch(`/api/history-periods`).then((res) => res.json())
   })
-  
   return (
     <div className="flex flex-wrap items-center gap-4">
         <SkeletonWrapper isLoading={historyPeriods.isFetching} fullWidth={false}>
@@ -98,7 +97,7 @@ function MonthSelector({period, setPeriod} : {
               <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 100].map(month => {
+            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(month => {
                 const monthStr = new Date(period.year, month, 1).toLocaleString("default", {month: "long"})
             return (
                 <SelectItem key={month} value={month.toString()}>

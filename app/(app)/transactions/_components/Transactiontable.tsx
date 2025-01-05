@@ -25,7 +25,6 @@ import {
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -148,8 +147,6 @@ export default function Transactiontable({from, to}: Props) {
     download(csvConfig)(csv);
   }
 
-  console.log(history)
-
   const table = useReactTable({
     data: history.data || emptyData,
     columns,
@@ -177,6 +174,14 @@ export default function Transactiontable({from, to}: Props) {
     const uniqueCategories = new Set(categoresMap.values())
     return Array.from(uniqueCategories)
   }, [history.data])
+
+  if (history.isError) {
+    return (
+      <div className="flex h-[200px] w-full items-center justify-center rounded-md border border-dashed">
+        <p className="text-muted-foreground">Failed to load transactions. Please try again.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full">
