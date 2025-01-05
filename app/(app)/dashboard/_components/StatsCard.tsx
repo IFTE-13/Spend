@@ -1,7 +1,7 @@
 "use client"
 
 import { GetBalanceStatsResponseType } from "@/app/api/stats/balance/route";
-import SkeletonWrapper from "@/components/SkeletonWrapper";
+import SkeletonWrapper from "@/components/wrapper/SkeletonWrapper";
 import { Card } from "@/components/ui/card";
 import { DateToUTCDate } from "@/lib/helpers";
 import { useQuery } from "@tanstack/react-query";

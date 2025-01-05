@@ -31,7 +31,7 @@ import {
     TableHeader,
     TableRow,
   } from "@/components/ui/table";
-import SkeletonWrapper from "@/components/SkeletonWrapper";
+import SkeletonWrapper from "@/components/wrapper/SkeletonWrapper";
 import { DataTableColumnHeader } from "@/components/datatable/ColumnHeader";
 import { useMemo, useState } from "react";
 import { cn } from "@/lib/utils";

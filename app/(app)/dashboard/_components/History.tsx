@@ -6,7 +6,7 @@ import { Period, Timeframe } from "@/lib/types"
 import { useCallback, useState } from "react"
 import HistoryPeriodSelector from "./HistoryPeriodSelector";
 import { useQuery } from "@tanstack/react-query";
-import SkeletonWrapper from "@/components/SkeletonWrapper";
+import SkeletonWrapper from "@/components/wrapper/SkeletonWrapper";
 import {
     Bar,
     BarChart,

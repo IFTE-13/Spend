@@ -1,7 +1,7 @@
 "use client"
 
 import { GetHistoryPeriodsType } from "@/app/api/history-periods/route";
-import SkeletonWrapper from "@/components/SkeletonWrapper";
+import SkeletonWrapper from "@/components/wrapper/SkeletonWrapper";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Period, Timeframe } from "@/lib/types"

@@ -6,6 +6,7 @@ import React from 'react'
 import CreateTransactionsDialog from './_components/CreateTransactionsDialog';
 import OverView from './_components/OverView';
 import History from './_components/History';
+import CategoryManagementSheetWrapper from '@/components/wrapper/CategoryManagementSheetWrapper';
 
 async function page() {
   requireUser();
@@ -38,6 +39,7 @@ async function page() {
             }
             type={"expense"}
             />
+            <CategoryManagementSheetWrapper />
           </div>
         </div>
       </div>

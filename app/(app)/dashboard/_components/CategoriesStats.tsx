@@ -1,4 +1,4 @@
-import SkeletonWrapper from '@/components/SkeletonWrapper';
+import SkeletonWrapper from '@/components/wrapper/SkeletonWrapper';
 import { DateToUTCDate } from '@/lib/helpers';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react'
